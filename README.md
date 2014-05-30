@@ -1,8 +1,8 @@
-trec-web-2013
+trec-web-2014
 =============
 
-Please see the full guidelines at http://research.microsoft.com/trec-web-2013 for detailed
-explanation of the TREC 2013 Web Track tasks and process.  This file explains what's in this github repository.
+Please see the full guidelines at http://www.umich.edu/~kevynct/trec-web-2014/ for detailed
+explanation of the TREC 2014 Web Track tasks and process.  This file explains what's in this github repository.
 
 For training purposes, systems can work with previous years' adhoc topics using ClueWeb09. To aid this 
 process we have provided in this github repository:
@@ -14,16 +14,16 @@ process we have provided in this github repository:
 
 For the risk-sensitive task, we provide a baseline run comprising the top 10000 results for a particular 
 choice of easily reproducible baseline system. The risk-sensitive retrieval performance of submitted systems 
-will be measured against this baseline. This year, the baseline will be provided using Indri with specific 
-default settings as provided by the Lemur online service. 
+will be measured against this baseline. This year, two baselines will be provided using (1) Indri with specific 
+default settings as provided by the Lemur online service, and (2) using Terrier with specified settings.
  
 Training baselines:
 
 Our ClueWeb09 training baseline uses TREC 2012 Web track topics that uses the same Indri settings 
-as will be used for the ClueWeb12 baseline. This baseline was computed using the Indri search engine, 
+as will be used for the ClueWeb12 2014 Indri baseline. This baseline was computed using the Indri search engine, 
 using its default query expansion based on pseudo-relevance feedback, with results filtered using 
 the Waterloo spam filter. The github file with the TREC 2012 baseline run can be found off 
-the trec-web-2013 root at:
+the trec-web-2014 root at:
 
 /data/runs/baselines/2012/rm/results-cata-filtered.txt (ClueWeb09 full index, indri default relevance model, spam-filtered) 
 
@@ -35,15 +35,15 @@ We have also included simple query likelihood runs that do not use query expansi
 
 Test baseline:
 
-The official 2013 test baseline file has been released and can be found in the trec-web-2013 github repository at:
+The official 2013 test baseline file that was released last year can be found in the trec-web-2014 github repository at:
 
 /data/runs/baselines/2013/rm/results-cata-filtered.txt
-
-You should use this as the key baseline for optimizing your 2013 risk-sensitive submitted runs.  
 
 This test baseline was computed using the same search system, retrieval method, and parameters as the corresponding 2012 training baseline: namely,
 using the Indri search engine with default query expansion based on pseudo-relevance feedback, with results filtered using 
 the Waterloo spam filter.
+
+(We will release the 2014 test baselines by July 4, 2014.  You should use the 2014 test baselines when they become available as the key baselines for optimizing your 2014 risk-sensitive submitted runs.)
 
 For further exploration, as with the training baselines, we have also provided various alternative flavors of test baseline, in case
 you want to compare results, combine strategies, etc.  (The file naming mirrors those of the 2012 baselines.) However, only the rm/results-cata-filtered.txt baseline above will be used
