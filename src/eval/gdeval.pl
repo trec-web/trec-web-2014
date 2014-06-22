@@ -9,6 +9,8 @@
 use constant LOGBASEDIV => log(2.0);
 
 # gloals
+my $GZ_OK = `which gzip`;
+my $BZ_OK = `which vzcat`;
 my $QRELS;
 my $VERSION = "version 1.3 (Mon Apr 29 20:50:24 EDT 2013)";
 my $MAX_JUDGMENT = 4; # Maximum gain value allowed in qrels file.
@@ -29,7 +31,22 @@ my $USAGE = "usage: $0 [options] qrels run\n
         evaluation.  A baseline must still be specified.  By default 0.
         The final weight to downside changes in performance is (1+value).\n";
 
-  
+sub zopen {
+    my $fp = shift;
+    my $file = shift;
+
+    if ($file =~ /\.gz/) {
+		die "gzip not found, .gz not supported" unless $GZ_OK;
+        open($$fp, "gzip -dc $file |") or die("Invalid ffile: $file - $!");
+    }
+    elsif ($file =~ /\.bz2/) {
+		die "bzcat not found, .bz2 not supported" unless $GZ_OK;
+        open($$fp, "bzcat $file |") or die("Invalid ffile: $file - $!");
+    }
+    else {
+        open($$fp, $file) or die("Invalid ffile: $file - $!");
+    }
+} 
 
 use strict 'vars';
 
@@ -84,8 +101,9 @@ use strict 'vars';
   # Read qrels file, check format, and sort
   my @qrels = ();
   my %seen = ();
-  open (QRELS,"<$QRELS") || die "$0: cannot open \"$QRELS\": $!\n";
-  while (<QRELS>) {
+  my $fq;
+  zopen(\$fq, "$QRELS") || die "$0: cannot open \"$QRELS\": $!\n";
+  while (<$fq>) {
     s/[\r\n]//g;
     my ($topic, $zero, $docno, $judgment) = split (' ');
     $topic =~ s/^.*\-//;
@@ -98,7 +116,7 @@ use strict 'vars';
       $seen{$topic} = 1;
     }
   }
-  close (QRELS);
+  close ($fq);
   @qrels = sort qrelsOrder (@qrels);
 
   # Process qrels: store judgments and compute ideal gains
@@ -238,8 +256,9 @@ sub processRun
   my $runid = "?????";
   my @run = ();
   # Read run rile, check format, and sort
-  open (RUN,"<$run") || die "$0: cannot open \"$run\": $!\n";
-  while (<RUN>) {
+  my $fr;
+  zopen(\$fr, $run) || die "$0: cannot open \"$run\": $!\n";
+  while (<$fr>) {
     s/[\r\n]//g;
     my ($topic, $q0, $docno, $rank, $score);
     ($topic, $q0, $docno, $rank, $score, $runid) = split (' ');
@@ -336,5 +355,5 @@ sub processRun
   printf "$runid,amean,%.5f,%.5f\n",$ndcgAvg,$errAvg if ($printTopics);
   
   return ($ndcgByTopic,$errByTopic,$runid);
-  close(RUN);
+  close($fr);
 }
