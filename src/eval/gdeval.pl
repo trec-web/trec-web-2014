@@ -10,7 +10,7 @@ use constant LOGBASEDIV => log(2.0);
 
 # gloals
 my $GZ_OK = `which gzip`;
-my $BZ_OK = `which vzcat`;
+my $BZ_OK = `which bzcat`;
 my $QRELS;
 my $VERSION = "version 1.3 (Mon Apr 29 20:50:24 EDT 2013)";
 my $MAX_JUDGMENT = 4; # Maximum gain value allowed in qrels file.
