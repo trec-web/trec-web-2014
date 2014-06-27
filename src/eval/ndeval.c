@@ -1245,7 +1245,7 @@ int i, j, nexti, nextj, numTopics;
   else
     {
       static char * between = " (rel to. ";
-      static char * rwstr = ", rs=1+a, a="; /* risk-sensitivity weight */
+      static char * rwstr = "; rs=1+a; a="; /* risk-sensitivity weight */
       static char * end = ")";
       runstring = localMalloc(strlen(runid) + strlen(between) + strlen(brunid) + strlen(rwstr) + strlen(riskAlphaString) + strlen(end) + 1);
       sprintf(runstring,"%s%s%s%s%s%s",runid,between,brunid,rwstr,riskAlphaString,end);
