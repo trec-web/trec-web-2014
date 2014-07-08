@@ -279,7 +279,7 @@ sub processRun
 
   if ($isRiskSensitive)
   {
-    $runid = sprintf("%s (rel to. %s, rs=1+a, a=%s)",$runid,$baserunname,$riskAlpha);
+    $runid = sprintf("%s (rel to. %s; rs=1+a; a=%s)",$runid,$baserunname,$riskAlpha);
   }
 
   # Process runs: compute measures for each topic and average
